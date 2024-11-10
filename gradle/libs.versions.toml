@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-
+jvmToolchain = "21"
 
 [libraries]
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

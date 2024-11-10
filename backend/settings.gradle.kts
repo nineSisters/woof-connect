@@ -9,6 +9,12 @@ dependencyResolutionManagement {
         }
     }
 }
+pluginManagement {
+    includeBuild("../build-plugin")
+    plugins {
+        id("build-kmp") apply false
+    }
+}
 
-
-include("m1-init-test")
+//enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include("testmodule")
