@@ -2,4 +2,5 @@
 /.idea/
 **/build/**
 /.kotlin/
-
+/deploy/volumes/ca
+/deploy/volumes/**/certs
