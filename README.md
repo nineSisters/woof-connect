@@ -32,7 +32,7 @@ WoofConnect - это социальная сеть для собак и их х�
   - vaccinations: List<Vaccine> — список прививок.
   - description: String — короткое описание.
   - photoUrl: String — URL фотографии.
-  - 
+
 2. UserProfile (Профиль пользователя):
   - id: ULong — уникальный идентификатор пользователя.
   - name: String — имя пользователя.
@@ -54,6 +54,65 @@ WoofConnect - это социальная сеть для собак и их х�
   - type: NotificationType — тип уведомления ("FRIEND_NEARBY", "ENEMY_NEARBY").
   - timestamp: Long — время отправки уведомления.
 
+## Основные операции
+
+1. **Создать собаку у пользователя**
+   ```kotlin
+   fun createDogProfile(userId: ULong, name: String, breed: Breed, age: Int, weight: Float, temperament: String, vaccinations: List<Vaccine>, description: String, photoUrl: String): DogProfile
+2. **Обновить собаку**
+   ```kotlin
+   fun updateDogProfile(dogId: ULong, name: String?, breed: Breed?, age: Int?, weight: Float?, temperament: String?, vaccinations: List<Vaccine>?, description: String?, photoUrl: String?): DogProfile
+   ```
+3. **Найти собаку по ID**
+   ```kotlin
+   fun getDogProfile(dogId: ULong): DogProfile?
+   ```
+4. **Удалить собаку**
+   ```kotlin
+   fun deleteDogProfile(dogId: ULong): Boolean
+   ```
+5. **Искать собак по критериям**
+   ```kotlin
+   fun searchDogs(breed: Breed?, ageRange: IntRange?, weightRange: FloatRange?, temperament: String?): List<DogProfile>
+   ```
+6. **Создать пользователя**
+   ```kotlin
+   fun createUserProfile(name: String): UserProfile
+   ```
+7. **Получить пользователя**
+   ```kotlin
+   fun getUserProfile(userId: ULong): UserProfile?
+   ```
+
+8. **Установить отношения между собаками**  
+   ```kotlin
+   fun setFriendshipStatus(dogId1: ULong, dogId2: ULong, status: FriendshipStatusType): FriendshipStatus
+   ```
+9. **Получить отношения между собаками**  
+   ```kotlin
+   fun getFriendshipStatus(dogId1: ULong, dogId2: ULong): FriendshipStatus
+   ```
+10. **Получить друзей собаки**  
+   ```kotlin
+   fun getDogFriends(dogId: ULong): List<DogProfile>
+   ```
+11. **Получить врагов собаки**  
+   ```kotlin
+   fun getDogEnemies(dogId: ULong): List<DogProfile>
+   ```
+12. **Обновить местоположение собаки**  
+   ```kotlin
+   fun updateDogLocation(dogId: ULong, location: Location): Boolean
+   ```
+13. **Получить собак в радиусе от собаки**  
+   ```kotlin
+   fun getNearbyDogs(dogId: ULong, radius: Double): List<DogProfile>
+   ```
+14. **Послать нотификацию владельцу собаки**  
+   ```kotlin
+   fun sendNotification(dogId: ULong, message: String, type: NotificationType): Notification
+   ```
+---
 ## Архитектура
 
 ![WoofArch](./WoofConnectArch.svg)
