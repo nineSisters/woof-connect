@@ -13,8 +13,13 @@ pluginManagement {
     includeBuild("../build-plugin")
     plugins {
         id("build-jvm") apply false
+
     }
 }
 
 rootProject.name = "backend"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(
+    ":woof-connect-api-v1"
+)

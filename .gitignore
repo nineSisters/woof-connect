@@ -2,5 +2,6 @@
 /.idea/
 **/build/**
 /.kotlin/
+!/.idea/kotlinc.xml
 /deploy/volumes/ca
 /deploy/volumes/**/certs

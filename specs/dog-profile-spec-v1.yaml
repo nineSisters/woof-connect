@@ -1,0 +1,316 @@
+openapi: 3.0.4
+info:
+  title: "Dog Profile API ${VERSION_APP}"
+  description: API for interacting with dog profiles, friendships, locations, and notifications.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: dogProfile
+    description: Управление профилями собак
+  - name: friendship
+    description: Управление дружбой и взаимоотношениями между собаками
+  - name: location
+    description: Управление логами локаций собак
+  - name: notification
+    description: Управление уведомлениями между собаками
+
+paths:
+  /dog-profile/create:
+    post:
+      tags:
+        - dogProfile
+      summary: Create dog profile
+      operationId: dogProfileCreate
+      requestBody:
+        description: Request body for creating a dog profile
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DogProfileCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DogProfileCreateResponse'
+
+  /dog-profile/read:
+    post:
+      tags:
+        - dogProfile
+      summary: Read dog profile
+      operationId: dogProfileRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DogProfileReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DogProfileReadResponse'
+
+  /dog-profile/update:
+    post:
+      tags:
+        - dogProfile
+      summary: Update dog profile
+      operationId: dogProfileUpdate
+      requestBody:
+        description: Request body for updating a dog profile
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DogProfileUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DogProfileUpdateResponse'
+
+  /dog-profile/delete:
+    post:
+      tags:
+        - dogProfile
+      summary: Delete dog profile
+      operationId: dogProfileDelete
+      requestBody:
+        description: Request body for deleting a dog profile
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DogProfileDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DogProfileDeleteResponse'
+
+  /friendship/manage:
+    post:
+      tags:
+        - friendship
+      summary: Manage friendship status
+      operationId: friendshipManage
+      requestBody:
+        description: Request body for creating or updating friendship status
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendshipManageRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendshipManageResponse'
+
+  /dog-location/log:
+    post:
+      tags:
+        - location
+      summary: Log a dog's location
+      operationId: dogLocationLog
+      requestBody:
+        description: Request body for logging a dog's location
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationLogRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationLogResponse'
+
+  /notification/create:
+    post:
+      tags:
+        - notification
+      summary: Create notification
+      operationId: notificationCreate
+      requestBody:
+        description: Request body for creating a notification
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationCreateResponse'
+
+components:
+  schemas:
+    # Dog Profile Schemas
+    DogProfileBase:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Buddy"
+        breed:
+          type: string
+          example: "LABRADOR"
+        age:
+          type: integer
+          example: 3
+        weight:
+          type: number
+          format: float
+          example: 25.5
+        description:
+          type: string
+          example: "Friendly and playful dog"
+        photoUrl:
+          type: string
+          format: uri
+          example: "http://example.com/photo.jpg"
+
+    DogProfileCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/DogProfileBase'
+
+    DogProfileCreateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1001"
+        dogProfile:
+          $ref: '#/components/schemas/DogProfileBase'
+
+    DogProfileReadRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          required: true
+          example: "1001"
+
+    DogProfileReadResponse:
+      type: object
+      properties:
+        dogProfile:
+          $ref: '#/components/schemas/DogProfileBase'
+
+    DogProfileUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/DogProfileBase'
+      properties:
+        id:
+          type: string
+          example: "1001"
+
+    DogProfileUpdateResponse:
+      $ref: '#/components/schemas/DogProfileCreateResponse'
+
+    DogProfileDeleteRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1001"
+
+    DogProfileDeleteResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Dog profile deleted successfully"
+
+    # Friendship Status Schemas
+    FriendshipManageRequest:
+      type: object
+      properties:
+        dogId1:
+          type: string
+          example: "1001"
+        dogId2:
+          type: string
+          example: "1002"
+        status:
+          type: string
+          enum: [ FRIEND, ENEMY, NEUTRAL ]
+          example: "FRIEND"
+
+    FriendshipManageResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FriendshipManageRequest'
+
+    # Location Schemas
+    LocationLogRequest:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          example: 59.9311
+        longitude:
+          type: number
+          format: double
+          example: 30.3609
+        parkName:
+          type: string
+          example: "Central Park"
+
+    LocationLogResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Location logged successfully"
+
+    NotificationCreateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uint64
+          example: "456123789"
+        message:
+          type: string
+          example: "A friend is nearby!"
+        type:
+          type: string
+          enum: [ FRIEND_NEARBY, ENEMY_NEARBY ]
+          example: "FRIEND_NEARBY"
+        timestamp:
+          type: integer
+          format: int64
+          example: 1633024800000
+
+    NotificationCreateResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Notification created"
