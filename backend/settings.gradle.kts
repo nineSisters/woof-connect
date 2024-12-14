@@ -12,9 +12,9 @@ dependencyResolutionManagement {
 pluginManagement {
     includeBuild("../build-plugin")
     plugins {
-        id("build-kmp") apply false
+        id("build-jvm") apply false
     }
 }
 
-//enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include("testmodule")
+rootProject.name = "backend"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
