@@ -4,7 +4,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ru.nnsh.woof_connect"
+rootProject.name = "woof-connect"
 
 includeBuild("build-plugin")
 includeBuild("backend")

@@ -10,5 +10,6 @@ dependencyResolutionManagement {
     }
 }
 
+rootProject.name = "lessons"
 
 include("m1-init-test")
