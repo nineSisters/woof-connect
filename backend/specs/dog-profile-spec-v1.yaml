@@ -145,33 +145,59 @@ paths:
               schema:
                 $ref: '#/components/schemas/LocationLogResponse'
 
-  /notification/create:
-    post:
-      tags:
-        - notification
-      summary: Create notification
-      operationId: notificationCreate
-      requestBody:
-        description: Request body for creating a notification
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NotificationCreateRequest'
-        required: true
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotificationCreateResponse'
-
 components:
   schemas:
-    # Dog Profile Schemas
+
+    Error:
+      type: object
+      required: [ code ]
+      properties:
+        code:
+          type: integer
+          format: int32
+        field:
+          type: string
+        message:
+          type: string
+
+    UserId:
+      type: object
+      required: [ id ]
+      properties:
+        id:
+          type: integer
+          format: int64
+
+    BaseResponse:
+      type: object
+      required: [ result ]
+      properties:
+        isSuccess:
+          type: boolean
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+    DogId:
+      type: object
+      required: [ id ]
+      properties:
+        id:
+          type: integer
+          format: int64
+
     DogProfileBase:
       type: object
+      required:
+        - name
+        - ownerId
+        - dogId
       properties:
+        ownerId:
+          $ref: '#/components/schemas/UserId'
+        dogId:
+          $ref: '#/components/schemas/DogId'
         name:
           type: string
           example: "Buddy"
@@ -194,123 +220,87 @@ components:
           example: "http://example.com/photo.jpg"
 
     DogProfileCreateRequest:
-      allOf:
-        - $ref: '#/components/schemas/DogProfileBase'
-
-    DogProfileCreateResponse:
       type: object
+      required: [ dogProfile ]
       properties:
-        id:
-          type: string
-          example: "1001"
         dogProfile:
           $ref: '#/components/schemas/DogProfileBase'
+
+    DogProfileCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/DogId'
 
     DogProfileReadRequest:
       type: object
       properties:
         id:
-          type: string
+          $ref: '#/components/schemas/DogId'
           required: true
-          example: "1001"
 
     DogProfileReadResponse:
-      type: object
-      properties:
-        dogProfile:
-          $ref: '#/components/schemas/DogProfileBase'
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            dogProfile:
+              $ref: '#/components/schemas/DogProfileBase'
 
     DogProfileUpdateRequest:
       allOf:
-        - $ref: '#/components/schemas/DogProfileBase'
-      properties:
-        id:
-          type: string
-          example: "1001"
+        - $ref: '#/components/schemas/DogProfileCreateRequest'
 
     DogProfileUpdateResponse:
-      $ref: '#/components/schemas/DogProfileCreateResponse'
+      allOf:
+       - $ref: '#/components/schemas/DogProfileCreateResponse'
 
     DogProfileDeleteRequest:
       type: object
+      required: [ id ]
       properties:
         id:
-          type: string
-          example: "1001"
+          $ref: '#/components/schemas/DogId'
 
     DogProfileDeleteResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: "Dog profile deleted successfully"
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
 
     # Friendship Status Schemas
     FriendshipManageRequest:
       type: object
+      required: [ dogId1, dogId2, status ]
       properties:
         dogId1:
-          type: string
-          example: "1001"
+          $ref: '#/components/schemas/DogId'
         dogId2:
-          type: string
-          example: "1002"
+          $ref: '#/components/schemas/DogId'
         status:
           type: string
           enum: [ FRIEND, ENEMY, NEUTRAL ]
-          example: "FRIEND"
 
     FriendshipManageResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/FriendshipManageRequest'
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            status:
+              $ref: '#/components/schemas/FriendshipManageRequest'
 
     # Location Schemas
-    LocationLogRequest:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-          example: 59.9311
-        longitude:
-          type: number
-          format: double
-          example: 30.3609
-        parkName:
-          type: string
-          example: "Central Park"
-
-    LocationLogResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: "Location logged successfully"
-
-    NotificationCreateRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uint64
-          example: "456123789"
-        message:
-          type: string
-          example: "A friend is nearby!"
-        type:
-          type: string
-          enum: [ FRIEND_NEARBY, ENEMY_NEARBY ]
-          example: "FRIEND_NEARBY"
-        timestamp:
-          type: integer
-          format: int64
-          example: 1633024800000
-
-    NotificationCreateResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: "Notification created"
+#    LocationLogRequest:
+#      type: object
+#      required: [ latitude, longitude ]
+#      properties:
+#        latitude:
+#          type: number
+#          format: double
+#        longitude:
+#          type: number
+#          format: double
+#
+#    LocationLogResponse:
+#      allOf:
+#        - $ref: '#/components/schemas/BaseResponse'
