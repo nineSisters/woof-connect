@@ -5,9 +5,8 @@ jvmToolchain = "21"
 [libraries]
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.0-RC" }
+serialization-jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.2"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 fabrikt = { id = "ch.acanda.gradle.fabrikt", version = "1.8.0" }
