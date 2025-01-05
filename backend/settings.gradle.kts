@@ -18,3 +18,8 @@ pluginManagement {
 
 rootProject.name = "backend"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(
+    ":woof-connect-api-v1",
+    ":woof-connect-common",
+)

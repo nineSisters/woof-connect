@@ -1,0 +1,386 @@
+openapi: 3.0.4
+info:
+  title: "Dog Profile API ${VERSION_APP}"
+  description: API for interacting with dog profiles, friendships, locations, and notifications.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: dogProfile
+    description: Управление профилями собак
+  - name: friendship
+    description: Управление дружбой и взаимоотношениями между собаками
+  - name: location
+    description: Управление логами локаций собак
+
+
+#paths:
+#  /dog-profile/create:
+#    post:
+#      tags:
+#        - dogProfile
+#      summary: Create dog profile
+#      operationId: dogProfileCreate
+#      requestBody:
+#        description: Request body for creating a dog profile
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/DogProfileCreateRequest'
+#        required: true
+#      responses:
+#        200:
+#          description: Success
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/DogProfileCreateResponse'
+#
+#  /dog-profile/read:
+#    post:
+#      tags:
+#        - dogProfile
+#      summary: Read dog profile
+#      operationId: dogProfileRead
+#      requestBody:
+#        description: Request body
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/DogProfileReadRequest'
+#        required: true
+#      responses:
+#        200:
+#          description: Success
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/DogProfileReadResponse'
+#
+#  /dog-profile/update:
+#    post:
+#      tags:
+#        - dogProfile
+#      summary: Update dog profile
+#      operationId: dogProfileUpdate
+#      requestBody:
+#        description: Request body for updating a dog profile
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/DogProfileUpdateRequest'
+#        required: true
+#      responses:
+#        200:
+#          description: Success
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/DogProfileUpdateResponse'
+#
+#  /dog-profile/delete:
+#    post:
+#      tags:
+#        - dogProfile
+#      summary: Delete dog profile
+#      operationId: dogProfileDelete
+#      requestBody:
+#        description: Request body for deleting a dog profile
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/DogProfileDeleteRequest'
+#        required: true
+#      responses:
+#        200:
+#          description: Success
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/DogProfileDeleteResponse'
+#
+#  /friendship/manage:
+#    post:
+#      tags:
+#        - friendship
+#      summary: Manage friendship status
+#      operationId: friendshipManage
+#      requestBody:
+#        description: Request body for creating or updating friendship status
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/FriendshipManageRequest'
+#        required: true
+#      responses:
+#        200:
+#          description: Success
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/FriendshipManageResponse'
+#
+#
+components:
+  schemas:
+    BaseError:
+      type: object
+      required: [ code ]
+      properties:
+        code:
+          type: integer
+          format: int32
+        field:
+          type: string
+        group:
+          type: string
+        message:
+          type: string
+
+    UserId:
+      type: object
+      required: [ userId ]
+      properties:
+        userId:
+          type: integer
+          format: int64
+
+    BaseResponse:
+      type: object
+      required: [ isSuccess, responseType, errors ]
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/DogProfileCreateResponse'
+          read: '#/components/schemas/DogProfileReadResponse'
+          update: '#/components/schemas/DogProfileUpdateResponse'
+          delete: '#/components/schemas/DogProfileDeleteResponse'
+          allDogs: '#/components/schemas/UserDogIdsResponse'
+
+      properties:
+        responseType:
+          type: string
+          description: Type discriminator
+        isSuccess:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/BaseError'
+
+    DogId:
+      type: object
+      required: [ dogId ]
+      properties:
+        dogId:
+          type: integer
+          format: int64
+
+    BaseRequest:
+      type: object
+      properties:
+        requestType:
+          type: string
+      required: [ requestType ]
+
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/DogProfileCreateRequest'
+          read: '#/components/schemas/DogProfileReadRequest'
+          update: '#/components/schemas/DogProfileUpdateRequest'
+          delete: '#/components/schemas/DogProfileDeleteRequest'
+          allDogs: '#/components/schemas/UserDogIdsRequest'
+
+    DogProfileBase:
+      type: object
+      required:
+        - name
+        - ownerId
+        - dogId
+      properties:
+        ownerId:
+          $ref: '#/components/schemas/UserId'
+        dogId:
+          $ref: '#/components/schemas/DogId'
+        name:
+          type: string
+          example: "Buddy"
+        breed:
+          type: string
+          example: "LABRADOR"
+        age:
+          type: integer
+          example: 3
+        weight:
+          type: number
+          format: float
+          example: 25.5
+        description:
+          type: string
+          example: "Friendly and playful dog"
+        photoUrl:
+          type: string
+          format: uri
+          example: "http://example.com/photo.jpg"
+
+    DogProfileCreateRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          required: [ dogProfile ]
+          properties:
+            dogProfile:
+              $ref: '#/components/schemas/DogProfileBase'
+            debug:
+              $ref: '#/components/schemas/DogProfileDebug'
+
+    DogProfileCreateResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            dogId:
+              $ref: '#/components/schemas/DogId'
+
+    DogProfileReadRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          required: [ dogId ]
+          properties:
+            dogId:
+              $ref: '#/components/schemas/DogId'
+            debug:
+              $ref: '#/components/schemas/DogProfileDebug'
+
+    DogProfileReadResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            dogProfile:
+              $ref: '#/components/schemas/DogProfileBase'
+
+    DogProfileUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          required: [ dogProfile ]
+          properties:
+            dogProfile:
+              $ref: '#/components/schemas/DogProfileBase'
+            debug:
+              $ref: '#/components/schemas/DogProfileDebug'
+
+    DogProfileUpdateResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            dogId:
+              $ref: '#/components/schemas/DogId'
+
+    DogProfileDeleteRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          required: [ dogId ]
+          properties:
+            dogId:
+              $ref: '#/components/schemas/DogId'
+            debug:
+              $ref: '#/components/schemas/DogProfileDebug'
+
+    DogProfileDeleteResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+
+    UserDogIdsRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+        - type: object
+          required: [ userId ]
+          properties:
+            userId:
+              $ref: '#/components/schemas/UserId'
+            debug:
+              $ref: '#/components/schemas/DogProfileDebug'
+
+    UserDogIdsResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            dogIds:
+              type: array
+              items:
+                $ref: '#/components/schemas/DogId'
+
+    # STUBS ======================
+    DogProfileRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    DogProfileRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/DogProfileDebug'
+
+    DogProfileDebug:
+      type: object
+      required: [ mode ]
+      properties:
+        mode:
+          $ref: '#/components/schemas/DogProfileRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/DogProfileRequestDebugStubs'
+
+    DogProfileRequestDebugStubs:
+      type: string
+      description: Enumerations for all DogProfile-specific stubs
+      enum:
+        - success
+        - notFound
+        - badDogId
+        - badOwnerId
+        - badName
+        - badAge
+
+#
+#    # Friendship Status Schemas
+#    FriendshipManageRequest:
+#      type: object
+#      required: [ dogId1, dogId2, status ]
+#      properties:
+#        dogId1:
+#          $ref: '#/components/schemas/DogId'
+#        dogId2:
+#          $ref: '#/components/schemas/DogId'
+#        status:
+#          type: string
+#          enum: [ FRIEND, ENEMY, NEUTRAL ]
+#
+#    FriendshipManageResponse:
+#      allOf:
+#        - $ref: '#/components/schemas/BaseResponse'
+#        - type: object
+#          properties:
+#            status:
+#              $ref: '#/components/schemas/FriendshipManageRequest'
+#
