@@ -1,13 +1,13 @@
-package ru.nnsh.woof_connect.common.models.stubs
+package ru.nnsh.woof_connect.common.stubs
 
 import java.net.URI
-import ru.nnsh.woof_connect.common.models.WfcContext
-import ru.nnsh.woof_connect.common.models.WfcState
-import ru.nnsh.woof_connect.common.models.WfcWorkMode
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogId
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileBase
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileStub
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcOwnerId
+import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcState
+import ru.nnsh.woof_connect.common.WfcWorkMode
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
+import ru.nnsh.woof_connect.common.dog_profile.WfcOwnerId
 
 fun WfcContext.processAsStub() {
     if (workMode != WfcWorkMode.STUB) return

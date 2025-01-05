@@ -1,9 +1,13 @@
 import org.junit.jupiter.api.Test
 import ru.nnsh.woof_connect.api.v1.models.*
-import ru.nnsh.woof_connect.common.models.WfcContext
-import ru.nnsh.woof_connect.common.models.WfcState
-import ru.nnsh.woof_connect.common.models.WfcWorkMode
-import ru.nnsh.woof_connect.common.models.dog_profile.*
+import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcState
+import ru.nnsh.woof_connect.common.WfcWorkMode
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
+import ru.nnsh.woof_connect.common.dog_profile.WfcOwnerId
 import ru.nnsh.woof_connect.mappers.fromTransport
 import ru.nnsh.woof_connect.mappers.toTransportResponse
 import kotlin.test.*

@@ -1,13 +1,13 @@
 package ru.nnsh.woof_connect.mappers
 
 import ru.nnsh.woof_connect.api.v1.models.*
-import ru.nnsh.woof_connect.common.models.WfcContext
-import ru.nnsh.woof_connect.common.models.WfcError
-import ru.nnsh.woof_connect.common.models.WfcState
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogId
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileBase
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileCommand
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcOwnerId
+import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcError
+import ru.nnsh.woof_connect.common.WfcState
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
+import ru.nnsh.woof_connect.common.dog_profile.WfcOwnerId
 
 fun WfcContext.toTransportResponse(): BaseResponse = when (val cmd = command) {
     WfcDogProfileCommand.CREATE -> toTransportCreate()

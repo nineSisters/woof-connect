@@ -1,10 +1,10 @@
-package ru.nnsh.woof_connect.common.models
+package ru.nnsh.woof_connect.common
 
 import kotlinx.datetime.Instant
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogId
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileBase
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileCommand
-import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileStub
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
 
 class WfcContext {
     var command: WfcDogProfileCommand = WfcDogProfileCommand.NONE

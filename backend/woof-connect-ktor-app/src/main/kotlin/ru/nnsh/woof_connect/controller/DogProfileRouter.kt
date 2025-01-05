@@ -8,8 +8,8 @@ import ru.nnsh.woof_connect.api.v1.models.DogProfileDeleteRequest
 import ru.nnsh.woof_connect.api.v1.models.DogProfileReadRequest
 import ru.nnsh.woof_connect.api.v1.models.DogProfileUpdateRequest
 import ru.nnsh.woof_connect.api.v1.models.UserDogIdsRequest
-import ru.nnsh.woof_connect.common.models.WfcContext
-import ru.nnsh.woof_connect.common.models.stubs.processAsStub
+import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.stubs.processAsStub
 
 @KtorDsl
 internal fun Routing.routeDogProfile(

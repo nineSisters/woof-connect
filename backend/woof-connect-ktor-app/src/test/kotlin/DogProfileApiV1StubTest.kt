@@ -30,7 +30,7 @@ import ru.nnsh.woof_connect.api.v1.models.DogProfileUpdateResponse
 import ru.nnsh.woof_connect.api.v1.models.UserDogIdsRequest
 import ru.nnsh.woof_connect.api.v1.models.UserDogIdsResponse
 import ru.nnsh.woof_connect.api.v1.models.UserId
-import ru.nnsh.woof_connect.common.models.stubs.stubDog
+import ru.nnsh.woof_connect.common.stubs.stubDog
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

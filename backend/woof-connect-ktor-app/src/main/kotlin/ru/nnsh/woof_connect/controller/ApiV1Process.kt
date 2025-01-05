@@ -7,10 +7,10 @@ import io.ktor.server.routing.RoutingContext
 import kotlinx.datetime.Clock
 import org.slf4j.LoggerFactory
 import ru.nnsh.woof_connect.api.v1.models.BaseRequest
-import ru.nnsh.woof_connect.common.models.WfcContext
-import ru.nnsh.woof_connect.common.models.WfcError
-import ru.nnsh.woof_connect.common.models.WfcRequestId
-import ru.nnsh.woof_connect.common.models.WfcState
+import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcError
+import ru.nnsh.woof_connect.common.WfcRequestId
+import ru.nnsh.woof_connect.common.WfcState
 import ru.nnsh.woof_connect.mappers.fromTransport
 import ru.nnsh.woof_connect.mappers.toTransportResponse
 import kotlin.coroutines.coroutineContext

@@ -1,4 +1,4 @@
-package ru.nnsh.woof_connect.common.models
+package ru.nnsh.woof_connect.common
 
 class WfcError(
     val code: Int,
