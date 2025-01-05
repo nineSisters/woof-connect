@@ -11,4 +11,6 @@ value class WfcRequestId(val id: Uuid) {
     companion object {
         val None = WfcRequestId(Uuid.NIL)
     }
+
+    override fun toString() = id.toString()
 }

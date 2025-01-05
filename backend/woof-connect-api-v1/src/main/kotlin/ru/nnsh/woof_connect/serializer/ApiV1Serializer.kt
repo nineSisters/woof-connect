@@ -13,7 +13,7 @@ private val kotlinModule = KotlinModule.Builder()
     .enable(KotlinFeature.SingletonSupport)
     .build()
 
-internal val apiV1ObjectMapper: JsonMapper = JsonMapper.builder()
+val apiV1ObjectMapper: JsonMapper = JsonMapper.builder()
     .addModules(kotlinModule)
     .enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
     .build()

@@ -6,4 +6,6 @@ class WfcError(
     val group: String? = null,
     val message: String? = null,
     val cause: Throwable? = null
-)
+) {
+    constructor(e: Exception): this(-1, message = e.toString(), cause = e)
+}

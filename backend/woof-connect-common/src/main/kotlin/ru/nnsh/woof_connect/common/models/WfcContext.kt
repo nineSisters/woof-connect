@@ -9,7 +9,7 @@ import ru.nnsh.woof_connect.common.models.dog_profile.WfcDogProfileStub
 class WfcContext {
     var command: WfcDogProfileCommand = WfcDogProfileCommand.NONE
     var state: WfcState = WfcState.NONE
-    val error: WfcError? = null
+    var error: WfcError? = null
 
     var workMode: WfcWorkMode = WfcWorkMode.PROD
     var stub: WfcDogProfileStub = WfcDogProfileStub.NONE

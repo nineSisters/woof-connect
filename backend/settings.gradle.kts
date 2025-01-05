@@ -22,4 +22,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(
     ":woof-connect-api-v1",
     ":woof-connect-common",
+    ":woof-connect-ktor-app",
+    ":woof-connect-logger",
 )
