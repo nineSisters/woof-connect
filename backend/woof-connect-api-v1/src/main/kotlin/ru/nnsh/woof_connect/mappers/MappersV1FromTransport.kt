@@ -55,7 +55,7 @@ private fun WfcContext.fromTransport(request: DogProfileReadRequest) {
 }
 
 private fun WfcContext.fromTransport(request: UserDogIdsRequest) {
-    command = WfcDogProfileCommand.READ_ALL_DOGS
+    command = WfcDogProfileCommand.LIST_ALL
     dogProfileRequest = WfcDogProfileBase(
         ownerId = request.userId.toInternal()
     )

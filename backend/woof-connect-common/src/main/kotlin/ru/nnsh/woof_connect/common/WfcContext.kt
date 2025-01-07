@@ -5,6 +5,7 @@ import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
+import ru.nnsh.woof_connect.common.ws.WfcWsSession
 
 class WfcContext {
     var command: WfcDogProfileCommand = WfcDogProfileCommand.NONE
@@ -21,6 +22,8 @@ class WfcContext {
     var dogProfileResponse: WfcDogProfileBase = WfcDogProfileBase()
 
     var allDogsResponse: List<WfcDogId> = emptyList()
+
+    var wsSession: WfcWsSession? = null
 
     inline operator fun invoke(block: WfcContext.() -> Unit): WfcContext = apply {
         block()

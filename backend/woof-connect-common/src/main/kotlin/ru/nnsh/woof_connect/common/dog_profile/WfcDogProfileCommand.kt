@@ -6,5 +6,7 @@ enum class WfcDogProfileCommand {
     DELETE,
     READ,
     UPDATE,
-    READ_ALL_DOGS
+    LIST_ALL,
+
+    INIT_WS
 }

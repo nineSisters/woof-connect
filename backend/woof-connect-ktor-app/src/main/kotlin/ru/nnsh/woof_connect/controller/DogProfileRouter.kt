@@ -1,36 +1,35 @@
 package ru.nnsh.woof_connect.controller
 
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
 import io.ktor.utils.io.KtorDsl
-import ru.nnsh.woof_connect.api.v1.models.DogProfileCreateRequest
-import ru.nnsh.woof_connect.api.v1.models.DogProfileDeleteRequest
-import ru.nnsh.woof_connect.api.v1.models.DogProfileReadRequest
-import ru.nnsh.woof_connect.api.v1.models.DogProfileUpdateRequest
-import ru.nnsh.woof_connect.api.v1.models.UserDogIdsRequest
 import ru.nnsh.woof_connect.common.WfcContext
 import ru.nnsh.woof_connect.common.stubs.processAsStub
+
+private const val REST_LOG_TAG = "REST controller"
 
 @KtorDsl
 internal fun Routing.routeDogProfile(
     processor: suspend WfcContext.() -> Unit = { processAsStub() }
 ) {
     post("/dog-profile/create") {
-        processApiV1<DogProfileCreateRequest>(processor)
+        call.processApiV1(REST_LOG_TAG, processor, call::receive) { call.respond(it) }
     }
     post("/dog-profile/delete") {
-        processApiV1<DogProfileDeleteRequest>(processor)
+        call.processApiV1(REST_LOG_TAG, processor, call::receive) { call.respond(it) }
     }
     post("/dog-profile/update") {
-        processApiV1<DogProfileUpdateRequest>(processor)
+        call.processApiV1(REST_LOG_TAG, processor, call::receive) { call.respond(it) }
     }
     post("/dog-profile/read") {
-        processApiV1<DogProfileReadRequest>(processor)
+        call.processApiV1(REST_LOG_TAG, processor, call::receive) { call.respond(it) }
     }
     post("/dog-profile/read") {
-        processApiV1<DogProfileReadRequest>(processor)
+        call.processApiV1(REST_LOG_TAG, processor, call::receive) { call.respond(it) }
     }
     post("/dog-profile/list") {
-        processApiV1<UserDogIdsRequest>(processor)
+        call.processApiV1(REST_LOG_TAG, processor, call::receive) { call.respond(it) }
     }
 }
