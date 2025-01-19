@@ -1,4 +1,4 @@
-package ru.nnsh.woof_connect.common.models.dog_profile
+package ru.nnsh.woof_connect.common.dog_profile
 
 enum class WfcDogProfileCommand {
     NONE,
@@ -6,5 +6,7 @@ enum class WfcDogProfileCommand {
     DELETE,
     READ,
     UPDATE,
-    READ_ALL_DOGS
+    LIST_ALL,
+
+    INIT_WS
 }

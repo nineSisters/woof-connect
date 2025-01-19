@@ -160,6 +160,7 @@ components:
           update: '#/components/schemas/DogProfileUpdateResponse'
           delete: '#/components/schemas/DogProfileDeleteResponse'
           allDogs: '#/components/schemas/UserDogIdsResponse'
+          init: '#/components/schemas/SessionInit'
 
       properties:
         responseType:
@@ -246,6 +247,11 @@ components:
           properties:
             dogId:
               $ref: '#/components/schemas/DogId'
+
+    SessionInit:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
 
     DogProfileReadRequest:
       type: object

@@ -1,11 +1,26 @@
 package ru.nnsh.woof_connect.mappers
 
-import ru.nnsh.woof_connect.api.v1.models.*
-import ru.nnsh.woof_connect.common.models.WfcContext
-import ru.nnsh.woof_connect.common.models.WfcWorkMode
-import ru.nnsh.woof_connect.common.models.dog_profile.*
+import ru.nnsh.woof_connect.api.v1.models.BaseRequest
+import ru.nnsh.woof_connect.api.v1.models.DogId
+import ru.nnsh.woof_connect.api.v1.models.DogProfileBase
+import ru.nnsh.woof_connect.api.v1.models.DogProfileCreateRequest
+import ru.nnsh.woof_connect.api.v1.models.DogProfileDebug
+import ru.nnsh.woof_connect.api.v1.models.DogProfileDeleteRequest
+import ru.nnsh.woof_connect.api.v1.models.DogProfileReadRequest
+import ru.nnsh.woof_connect.api.v1.models.DogProfileRequestDebugMode
+import ru.nnsh.woof_connect.api.v1.models.DogProfileRequestDebugStubs
+import ru.nnsh.woof_connect.api.v1.models.DogProfileUpdateRequest
+import ru.nnsh.woof_connect.api.v1.models.UserDogIdsRequest
+import ru.nnsh.woof_connect.api.v1.models.UserId
+import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcWorkMode
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
+import ru.nnsh.woof_connect.common.dog_profile.WfcOwnerId
 
-internal fun WfcContext.fromTransport(request: BaseRequest) = apply {
+fun WfcContext.fromTransport(request: BaseRequest) = apply {
     when (request) {
         is DogProfileCreateRequest -> fromTransport(request)
         is DogProfileDeleteRequest -> fromTransport(request)
@@ -40,7 +55,7 @@ private fun WfcContext.fromTransport(request: DogProfileReadRequest) {
 }
 
 private fun WfcContext.fromTransport(request: UserDogIdsRequest) {
-    command = WfcDogProfileCommand.READ_ALL_DOGS
+    command = WfcDogProfileCommand.LIST_ALL
     dogProfileRequest = WfcDogProfileBase(
         ownerId = request.userId.toInternal()
     )

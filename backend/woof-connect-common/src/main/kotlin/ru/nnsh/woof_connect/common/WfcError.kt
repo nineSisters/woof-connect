@@ -1,4 +1,4 @@
-package ru.nnsh.woof_connect.common.models
+package ru.nnsh.woof_connect.common
 
 class WfcError(
     val code: Int,
@@ -6,4 +6,6 @@ class WfcError(
     val group: String? = null,
     val message: String? = null,
     val cause: Throwable? = null
-)
+) {
+    constructor(e: Exception): this(-1, message = e.toString(), cause = e)
+}

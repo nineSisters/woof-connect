@@ -1,4 +1,4 @@
-package ru.nnsh.woof_connect.common.models.dog_profile
+package ru.nnsh.woof_connect.common.dog_profile
 
 @JvmInline
 value class WfcOwnerId(val id: Long) {

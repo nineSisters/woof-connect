@@ -1,6 +1,7 @@
 plugins {
     id("build-jvm")
     alias(libs.plugins.fabrikt)
+    id("java-test-fixtures")
 }
 
 dependencies {
