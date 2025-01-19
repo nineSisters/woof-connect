@@ -12,4 +12,4 @@ rootProject.name = "woof-connect"
 
 includeBuild("build-plugin")
 includeBuild("backend")
-includeBuild("lessons")
+includeBuild("libs")

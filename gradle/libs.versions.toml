@@ -3,10 +3,12 @@ kotlin = "2.1.0"
 jvmToolchain = "21"
 ktor-version = "3.0.3"
 logback = "1.5.13"
-
+coroutines = "1.10.1"
 [libraries]
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 serialization-jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.2"}
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets-jvm", version.ref = "ktor-version" }
@@ -21,11 +23,12 @@ ktor-server-auth = { module = "io.ktor:ktor-server-auth-jvm", version.ref = "kto
 ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt-jvm", version.ref = "ktor-version" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio-jvm", version.ref = "ktor-version" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+
 #logback-core = { group = "ch.qos.logback", name = "logback-core", version.ref = "logback" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 fabrikt = { id = "ch.acanda.gradle.fabrikt", version = "1.8.0" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
+kotlinx-atomic = { id = "org.jetbrains.kotlinx.atomicfu", version = "0.27.0 "}

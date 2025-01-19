@@ -11,6 +11,7 @@ dependencyResolutionManagement {
 }
 pluginManagement {
     includeBuild("../build-plugin")
+    includeBuild("../libs")
     plugins {
         id("build-jvm") apply false
     }
