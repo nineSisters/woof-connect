@@ -28,6 +28,7 @@ dependencies {
     implementation(projects.woofConnectCommon)
     implementation(projects.woofConnectApiV1)
     implementation(projects.woofConnectLogger)
+    implementation(projects.woofConnectBusinessLogic)
 }
 
 tasks.test {

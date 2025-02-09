@@ -40,6 +40,7 @@ private fun WfcContext.fromTransport(request: DogProfileCreateRequest) {
 private fun WfcContext.fromTransport(request: DogProfileDeleteRequest) {
     command = WfcDogProfileCommand.DELETE
     dogProfileRequest = WfcDogProfileBase(
+        ownerId = request.ownerId.toInternal(),
         dogId = request.dogId.toInternal()
     )
     workMode = request.debug.toWorkMode()

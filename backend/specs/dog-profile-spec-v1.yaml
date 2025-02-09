@@ -299,8 +299,10 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseRequest'
         - type: object
-          required: [ dogId ]
+          required: [ dogId, ownerId ]
           properties:
+            ownerId:
+              $ref: '#/components/schemas/UserId'
             dogId:
               $ref: '#/components/schemas/DogId'
             debug:

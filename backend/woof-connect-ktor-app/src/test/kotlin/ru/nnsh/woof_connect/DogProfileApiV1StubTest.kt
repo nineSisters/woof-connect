@@ -36,8 +36,8 @@ class DogProfileApiV1StubTest {
         body = DogProfileTestFixtures.readRequest
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileReadResponse>()
-        assertEquals(httpResponse.status, HttpStatusCode.OK)
-        assertEquals(response.dogProfile?.name, "Sharik")
+        assertEquals(HttpStatusCode.OK, httpResponse.status)
+        assertEquals("Sharik", response.dogProfile?.name)
     }
 
     @Test
@@ -46,9 +46,9 @@ class DogProfileApiV1StubTest {
         body = DogProfileTestFixtures.createRequest
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileCreateResponse>()
-        assertEquals(httpResponse.status, HttpStatusCode.OK)
+        assertEquals(HttpStatusCode.OK, httpResponse.status)
         assertTrue(response.isSuccess)
-        assertEquals(response.dogId?.dogId, stubDog.dogId.id)
+        assertEquals(stubDog.dogId.id, response.dogId?.dogId)
     }
 
     @Test
@@ -80,7 +80,7 @@ class DogProfileApiV1StubTest {
         val response = httpResponse.body<UserDogIdsResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
         assertTrue(response.isSuccess)
-        assertContentEquals(response.dogIds, listOf(DogId(1), DogId(2)))
+        assertContentEquals(response.dogIds, LongArray(10) { it.toLong() }.map { DogId(it) })
     }
 
     @Test
@@ -90,7 +90,7 @@ class DogProfileApiV1StubTest {
             .copy(debug = DogProfileTestFixtures.notFoundStubDebug)
     ) { httpResponse ->
         val response = httpResponse.body<UserDogIdsResponse>()
-        assertEquals(httpResponse.status, HttpStatusCode.OK)
+        assertEquals(HttpStatusCode.OK, httpResponse.status)
         assertFalse(response.isSuccess)
         assertNotNull(response.error)
     }

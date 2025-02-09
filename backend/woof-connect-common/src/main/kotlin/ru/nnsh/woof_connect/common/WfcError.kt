@@ -8,4 +8,9 @@ class WfcError(
     val cause: Throwable? = null
 ) {
     constructor(e: Exception): this(-1, message = e.toString(), cause = e)
+    companion object {
+        const val CODE_VALIDATION = -2
+        const val CODE_DB = -3
+        const val CODE_SYSTEM = -4
+    }
 }

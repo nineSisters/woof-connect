@@ -25,7 +25,7 @@ class WfcContext {
 
     var wsSession: WfcWsSession? = null
 
-    inline operator fun invoke(block: WfcContext.() -> Unit): WfcContext = apply {
-        block()
+    companion object {
+        inline operator fun invoke(block: WfcContext.() -> Unit) = WfcContext().apply(block)
     }
 }
