@@ -43,7 +43,7 @@ internal fun WfcChain.stubsChain() = stubs {
     }
 }
 
-internal fun WfcChain.stubs(
+private fun WfcChain.stubs(
     block: ICorChainDsl<WfcContext, WfcCorConfiguration>.() -> Unit
 ) = chain {
     title = "stubs chain"

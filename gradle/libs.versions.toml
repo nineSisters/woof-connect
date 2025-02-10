@@ -9,7 +9,8 @@ plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-serialization-jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.2"}
+serialization-jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.2" }
+#validation-konform = { module = "io.konform:konform-jvm", version = "0.10.0" }
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets-jvm", version.ref = "ktor-version" }
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets-jvm", version.ref = "ktor-version" }
@@ -32,4 +33,3 @@ logging-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.16
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 fabrikt = { id = "ch.acanda.gradle.fabrikt", version = "1.8.0" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
-kotlinx-atomic = { id = "org.jetbrains.kotlinx.atomicfu", version = "0.27.0 "}

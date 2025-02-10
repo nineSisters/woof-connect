@@ -8,6 +8,7 @@ import ru.nnsh.woof_connect.common.WfcContext
 import ru.nnsh.woof_connect.common.WfcState
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
 import ru.nnsh.woof_connect.stubs.stubsChain
+import ru.nnsh.woof_connect.validation.validationChain
 
 typealias WfcProcessor = suspend WfcContext.() -> Unit
 typealias WfcChain = ICorChainDsl<WfcContext, WfcCorConfiguration>
@@ -17,6 +18,7 @@ fun WfcProcessor(
     corConfiguration: WfcCorConfiguration
 ): WfcProcessor = rootChain<WfcContext, WfcCorConfiguration>(corConfiguration) {
     stubsChain()
+    validationChain()
 }
     .build()::execute
 
