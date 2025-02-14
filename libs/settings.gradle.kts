@@ -10,6 +10,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "lessons"
+rootProject.name = "libs"
 
-include("m1-init-test")
+include("cor")

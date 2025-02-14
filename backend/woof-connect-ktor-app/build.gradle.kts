@@ -23,12 +23,12 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.client.websockets)
-    testImplementation(libs.kotlin.test.junit)
     testImplementation(testFixtures(projects.woofConnectApiV1))
 
     implementation(projects.woofConnectCommon)
     implementation(projects.woofConnectApiV1)
     implementation(projects.woofConnectLogger)
+    implementation(projects.woofConnectBusinessLogic)
 }
 
 tasks.test {

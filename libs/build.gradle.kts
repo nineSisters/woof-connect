@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply  false
 }
 
-group = "ru.nnsh.woof_connect"
+group = "ru.nnsh.woof-connect"
 version = "0.1"
 
 subprojects {

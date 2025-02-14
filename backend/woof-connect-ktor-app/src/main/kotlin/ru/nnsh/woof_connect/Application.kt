@@ -1,24 +1,18 @@
 package ru.nnsh.woof_connect
 
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
-import io.ktor.serialization.jackson.JacksonConverter
-import io.ktor.serialization.jackson.JacksonWebsocketContentConverter
-import io.ktor.server.application.Application
-import io.ktor.server.application.install
-import io.ktor.server.application.serverConfig
-import io.ktor.server.cio.CIO
-import io.ktor.server.engine.connector
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.plugins.callid.CallId
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
-import io.ktor.server.routing.routing
-import io.ktor.server.websocket.WebSockets
-import io.ktor.server.websocket.webSocket
+import io.ktor.http.*
+import io.ktor.serialization.jackson.*
+import io.ktor.server.application.*
+import io.ktor.server.cio.*
+import io.ktor.server.engine.*
+import io.ktor.server.plugins.callid.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import ru.nnsh.woof_connect.common.ws.WfcWsSessionRepository
 import ru.nnsh.woof_connect.controller.routeDogProfile
+import ru.nnsh.woof_connect.logger.loggerFactory
 import ru.nnsh.woof_connect.serializer.apiV1ObjectMapper
 import ru.nnsh.woof_connect.ws.WfcWsSessionsRepositoryImpl
 import ru.nnsh.woof_connect.ws.processWsSession
@@ -51,7 +45,9 @@ private fun Application.routingModule() {
         get("/") {
             call.respondText("Hi")
         }
-        routeDogProfile()
+        routeDogProfile(
+            WfcProcessor(WfcCorConfiguration(loggerFactory))
+        )
     }
 }
 
@@ -83,7 +79,7 @@ private fun Application.webSocketModule(
     }
     routing {
         webSocket("/ws") {
-            processWsSession(sessionsRepository)
+            processWsSession(sessionsRepository, WfcProcessor(WfcCorConfiguration(loggerFactory)))
         }
     }
 }

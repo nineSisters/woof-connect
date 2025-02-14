@@ -11,6 +11,7 @@ dependencyResolutionManagement {
 }
 pluginManagement {
     includeBuild("../build-plugin")
+    includeBuild("../libs")
     plugins {
         id("build-jvm") apply false
     }
@@ -24,4 +25,5 @@ include(
     ":woof-connect-common",
     ":woof-connect-ktor-app",
     ":woof-connect-logger",
+    ":woof-connect-business-logic"
 )

@@ -1,4 +1,4 @@
-package ru.nnsh.woof_connect.ru.nnsh.woof_connect
+package ru.nnsh.woof_connect
 
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.receiveDeserialized
@@ -19,7 +19,6 @@ import ru.nnsh.woof_connect.api.v1.models.SessionInit
 import ru.nnsh.woof_connect.api.v1.models.UserDogIdsResponse
 import ru.nnsh.woof_connect.common.stubs.stubDog
 import ru.nnsh.woof_connect.fixtures.DogProfileTestFixtures
-import ru.nnsh.woof_connect.module
 import ru.nnsh.woof_connect.serializer.apiV1ObjectMapper
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
