@@ -5,6 +5,7 @@ import ru.nanashi.ru.nnsh.cor.dsl.ICorWorkerDsl
 import ru.nanashi.ru.nnsh.cor.impl.chain
 import ru.nanashi.ru.nnsh.cor.impl.rootChain
 import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.common.WfcState
 import ru.nnsh.woof_connect.common.WfcWorkMode
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand

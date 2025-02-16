@@ -2,7 +2,7 @@ package ru.nnsh.woof_connect.stubs
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import ru.nnsh.woof_connect.WfcCorConfiguration
+import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.WfcProcessor
 import ru.nnsh.woof_connect.common.WfcContext
 import ru.nnsh.woof_connect.common.WfcState
@@ -11,13 +11,22 @@ import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
 import ru.nnsh.woof_connect.common.dog_profile.WfcOwnerId
+import ru.nnsh.woof_connect.common.repository.IDogProfileRepository
 import ru.nnsh.woof_connect.common.stubs.stubDog
+import ru.nnsh.woof_connect.common.ws.WfcWsSessionRepository
 import ru.nnsh.woof_connect.logger.loggerFactory
 import kotlin.test.assertEquals
 
 class ValidationTest {
 
-    private val processor: WfcProcessor = WfcProcessor(WfcCorConfiguration(loggerFactory))
+    private val processor: WfcProcessor = WfcProcessor(
+        WfcCorConfiguration(
+            loggerFactory,
+            wsSessionRepository = WfcWsSessionRepository.NONE,
+            testRepository = IDogProfileRepository.NONE,
+            prodRepository = IDogProfileRepository.NONE
+        )
+    )
     val userId = WfcOwnerId(11)
     val dogId = WfcDogId(12)
 

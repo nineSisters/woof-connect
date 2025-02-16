@@ -25,6 +25,9 @@ class WfcContext {
 
     var wsSession: WfcWsSession? = null
 
+    var dogProfileRead: WfcDogProfileBase = WfcDogProfileBase() // have read from repository
+    var dogProfilePrepare: WfcDogProfileBase = WfcDogProfileBase() // preparing to save to repository
+
     companion object {
         inline operator fun invoke(block: WfcContext.() -> Unit) = WfcContext().apply(block)
     }

@@ -4,7 +4,7 @@ import ru.nanashi.ru.nnsh.cor.dsl.ICorChainDsl
 import ru.nanashi.ru.nnsh.cor.impl.chain
 import ru.nanashi.ru.nnsh.cor.impl.worker
 import ru.nnsh.woof_connect.WfcChain
-import ru.nnsh.woof_connect.WfcCorConfiguration
+import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.common.WfcContext
 import ru.nnsh.woof_connect.common.WfcError.Companion.CODE_VALIDATION
 import ru.nnsh.woof_connect.common.WfcState
