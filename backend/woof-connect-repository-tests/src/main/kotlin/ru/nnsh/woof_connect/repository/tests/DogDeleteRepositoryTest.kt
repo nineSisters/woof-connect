@@ -31,12 +31,7 @@ abstract class DogDeleteRepositoryTest(
     fun deleteNotFound() = runRepoTest {
         val result = repository.deleteDog(DbDogIdRequest(stubDog.dogId))
         assertIs<IDbResponse.Err>(result)
-        val expected = WfcError(
-            code = WfcError.CODE_DB,
-            field = "dogId",
-            group = "database",
-            message = "Dog not found"
-        )
+        val expected = WfcError.DOG_NOT_FOUND
         assertEquals(expected, result.err)
     }
 }

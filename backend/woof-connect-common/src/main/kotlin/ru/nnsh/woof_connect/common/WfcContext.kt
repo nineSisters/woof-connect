@@ -5,6 +5,7 @@ import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
+import ru.nnsh.woof_connect.common.repository.IDogProfileRepository
 import ru.nnsh.woof_connect.common.ws.WfcWsSession
 
 class WfcContext {
@@ -25,7 +26,9 @@ class WfcContext {
 
     var wsSession: WfcWsSession? = null
 
+    var dogProfileRepository: IDogProfileRepository = IDogProfileRepository.NONE
     var dogProfileRead: WfcDogProfileBase = WfcDogProfileBase() // have read from repository
+    var dogProfileDone: WfcDogProfileBase = WfcDogProfileBase() // finished processing
     var dogProfilePrepare: WfcDogProfileBase = WfcDogProfileBase() // preparing to save to repository
 
     companion object {

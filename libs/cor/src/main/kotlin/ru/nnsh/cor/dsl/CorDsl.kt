@@ -9,7 +9,7 @@ interface ICorConfigurable<C> {
     val configuration: C
 }
 
-interface ICorExecDsl<T, C> :ICorConfigurable<C> {
+interface ICorExecDsl<T, C> : ICorConfigurable<C> {
     var title: String
     fun build(): ICorExecutable<T>
 }
@@ -29,11 +29,11 @@ fun interface ICorDoWorkDsl<T> {
     fun doWork(lambda: suspend T.() -> Unit)
 }
 
-interface ICorWorkerDsl<T, C>: ICorExecDsl<T, C>, ICorOnDsl<T>, ICorRaiseDsl<T>, ICorDoWorkDsl<T>
+interface ICorWorkerDsl<T, C> : ICorExecDsl<T, C>, ICorOnDsl<T>, ICorRaiseDsl<T>, ICorDoWorkDsl<T>
 
 interface ICorAddExecDsl<T, C> {
     @CorDsl
     fun add(execDsl: ICorExecDsl<T, C>)
 }
 
-interface ICorChainDsl<T, C>: ICorExecDsl<T, C>, ICorOnDsl<T>, ICorRaiseDsl<T>, ICorAddExecDsl<T, C>
+interface ICorChainDsl<T, C> : ICorExecDsl<T, C>, ICorOnDsl<T>, ICorRaiseDsl<T>, ICorAddExecDsl<T, C>

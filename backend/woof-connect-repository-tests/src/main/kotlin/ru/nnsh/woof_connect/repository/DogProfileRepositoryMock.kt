@@ -4,7 +4,7 @@ import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
 import ru.nnsh.woof_connect.common.repository.*
 
-internal open class DogProfileRepositoryMock : IDogProfileRepository, IDogProfileRepository.Initializable {
+open class DogProfileRepositoryMock : IDogProfileRepository, IDogProfileRepository.Initializable {
 
     protected open val defaultDogProfileResponse = IDbResponse.DogProfile(WfcDogProfileBase())
     protected open val defaultDogListResponse = IDbResponse.DogIds(emptyList())

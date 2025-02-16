@@ -8,9 +8,8 @@ dependencies {
 
     implementation(projects.woofConnectCommon)
     api(kotlin("test"))
-    api(kotlin("test-junit"))
+    api(kotlin("test-junit5"))
     api(libs.kotlinx.coroutines.test)
-    api(libs.test.jupiterApi)
 }
 
 tasks.test {

@@ -2,16 +2,10 @@ package ru.nnsh.woof_connect.stubs
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.WfcProcessor
-import ru.nnsh.woof_connect.common.WfcContext
-import ru.nnsh.woof_connect.common.WfcError
-import ru.nnsh.woof_connect.common.WfcState
-import ru.nnsh.woof_connect.common.WfcWorkMode
+import ru.nnsh.woof_connect.common.*
 import ru.nnsh.woof_connect.common.dog_profile.*
-import ru.nnsh.woof_connect.common.repository.IDogProfileRepository
 import ru.nnsh.woof_connect.common.stubs.stubDog
-import ru.nnsh.woof_connect.common.ws.WfcWsSessionRepository
 import ru.nnsh.woof_connect.logger.loggerFactory
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -20,10 +14,7 @@ class StubTest {
 
     private val processor: WfcProcessor = WfcProcessor(
         WfcCorConfiguration(
-            loggerFactory,
-            wsSessionRepository = WfcWsSessionRepository.NONE,
-            testRepository = IDogProfileRepository.NONE,
-            prodRepository = IDogProfileRepository.NONE
+            loggerFactory
         )
     )
     private val userId = WfcOwnerId(11)

@@ -6,9 +6,9 @@ import ru.nnsh.woof_connect.common.ws.WfcWsSessionRepository
 
 class WfcCorConfiguration(
     val loggerFactory: ILoggerFactory,
-    val wsSessionRepository: WfcWsSessionRepository,
-//    val stubRepository: IDogProfileRepository = IDogProfileRepository.NONE,
+    val wsSessionRepository: WfcWsSessionRepository = WfcWsSessionRepository.NONE,
 
+    val stubRepository: IDogProfileRepository = IDogProfileRepository.NONE,
     val testRepository: IDogProfileRepository = IDogProfileRepository.NONE,
     val prodRepository: IDogProfileRepository = IDogProfileRepository.NONE
 )

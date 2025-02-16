@@ -37,12 +37,7 @@ abstract class DogListRepositoryTest(
         val notFoundDog = stubDog.copy(dogId = WfcDogId(-1))
         val result = repository.updateDog(DbDogProfileRequest(notFoundDog))
         assertIs<IDbResponse.Err>(result)
-        val expected = WfcError(
-            code = WfcError.CODE_DB,
-            field = "dogId",
-            group = "database",
-            message = "Dog not found"
-        )
+        val expected = WfcError.DOG_NOT_FOUND
         assertEquals(expected, result.err)
     }
 }

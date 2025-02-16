@@ -9,6 +9,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(projects.woofConnectRepositoryTests)
 }
 
 tasks.test {

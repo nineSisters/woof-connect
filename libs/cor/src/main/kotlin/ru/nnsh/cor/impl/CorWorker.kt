@@ -14,7 +14,7 @@ internal class CorWorker<T>(
 
     override suspend fun on(context: T): Boolean = context.onLambda()
     override suspend fun raise(context: T, e: Exception) = context.raiseLambda(e)
-    override suspend fun doWork(context: T) = context.doWorkLambda()
+    override suspend fun doWork(context: T) = context.doWorkLambda().apply { println(title) }
 
 }
 
@@ -22,12 +22,14 @@ internal class CorWorker<T>(
 internal class CorWorkerDsl<T, C>(
     override val configuration: C,
     override var title: String = "",
-) : ICorWorkerDsl<T,C> {
+) : ICorWorkerDsl<T, C> {
+
     override fun build(): ICorExecutable<T> {
         return CorWorker(title, onLambda, doWorkLambda, raiseLambda)
     }
 
     private var onLambda: suspend T.() -> Boolean = { true }
+
     @CorDsl
     override fun on(lambda: suspend T.() -> Boolean) {
         onLambda = lambda
@@ -36,6 +38,7 @@ internal class CorWorkerDsl<T, C>(
     private var raiseLambda: suspend T.(e: Exception) -> Unit = {
         throw it
     }
+
     @CorDsl
     override fun raise(lambda: suspend T.(e: Exception) -> Unit) {
         raiseLambda = lambda

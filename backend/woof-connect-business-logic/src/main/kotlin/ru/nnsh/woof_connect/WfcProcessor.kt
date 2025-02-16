@@ -1,5 +1,6 @@
 package ru.nnsh.woof_connect
 
+import ru.nanashi.ru.nnsh.cor.dsl.CorDsl
 import ru.nanashi.ru.nnsh.cor.dsl.ICorChainDsl
 import ru.nanashi.ru.nnsh.cor.dsl.ICorWorkerDsl
 import ru.nanashi.ru.nnsh.cor.impl.chain
@@ -9,6 +10,7 @@ import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.common.WfcState
 import ru.nnsh.woof_connect.common.WfcWorkMode
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileCommand
+import ru.nnsh.woof_connect.repository.*
 import ru.nnsh.woof_connect.stubs.*
 import ru.nnsh.woof_connect.validation.*
 
@@ -19,6 +21,7 @@ typealias WfcWorker = ICorWorkerDsl<WfcContext, WfcCorConfiguration>
 fun WfcProcessor(
     corConfiguration: WfcCorConfiguration
 ): WfcProcessor = rootChain<WfcContext, WfcCorConfiguration>(corConfiguration) {
+    initRepository()
     operation("Регистрация собаки", WfcDogProfileCommand.CREATE) {
         stubs {
             stubCreateSuccess("Имитация успешной обработки")
@@ -35,6 +38,12 @@ fun WfcProcessor(
             validateHasUserId()
             validateDescription()
         }
+        chain {
+            title = "Логика сохранения"
+            prepareCreateDog()
+            createDog()
+            prepareResult()
+        }
     }
     operation("Удаление собаки", WfcDogProfileCommand.DELETE) {
         stubs {
@@ -47,6 +56,13 @@ fun WfcProcessor(
             validateHasUserId()
             validateHasDogId()
         }
+        chain {
+            title = "Логика удаления"
+            readDog()
+            prepareDeleteDog()
+            deleteDog()
+            prepareResult()
+        }
     }
     operation("Чтение собаки", WfcDogProfileCommand.READ) {
         stubs {
@@ -56,6 +72,12 @@ fun WfcProcessor(
         }
         validation {
             validateHasDogId()
+        }
+        chain {
+            title = "Логика чтения"
+            readDog()
+            prepareReadDog()
+            prepareResult()
         }
     }
     operation("Обновление собаки", WfcDogProfileCommand.UPDATE) {
@@ -70,11 +92,13 @@ fun WfcProcessor(
             trimDogName()
             validateHasDogId()
             validateHasUserId()
-            validateDogName()
-            validateDogHasWeight()
-            validateDogHasAge()
-            validateHasUserId()
-            validateDescription()
+        }
+        chain {
+            title = "Логика удаления"
+            readDog()
+            prepareUpdateDog()
+            updateDog()
+            prepareResult()
         }
     }
     operation("Список собак", WfcDogProfileCommand.LIST_ALL) {
@@ -85,6 +109,11 @@ fun WfcProcessor(
         }
         validation {
             validateHasUserId()
+        }
+        chain {
+            title = "Выборка собак"
+            prepareListDogs()
+            listDogs()
         }
     }
 }.build()::execute
@@ -107,4 +136,9 @@ internal fun WfcChain.stubs(
     title = "stubs chain"
     on { workMode == WfcWorkMode.STUB && state == WfcState.RUNNING }
     block()
+}
+
+@CorDsl
+internal fun WfcWorker.onRunning() {
+    on { state == WfcState.RUNNING }
 }

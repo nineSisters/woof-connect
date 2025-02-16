@@ -4,5 +4,6 @@ package ru.nnsh.woof_connect.common.dog_profile
 value class WfcOwnerId(val id: Long) {
     companion object {
         val None = WfcOwnerId(0)
+        val TheOne = WfcOwnerId(1)
     }
 }
