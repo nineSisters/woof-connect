@@ -12,33 +12,46 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.jackson.jackson
 import io.ktor.server.testing.testApplication
+import kotlin.test.assertContentEquals
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import ru.nnsh.woof_connect.api.v1.models.BaseRequest
 import ru.nnsh.woof_connect.api.v1.models.DogId
 import ru.nnsh.woof_connect.api.v1.models.DogProfileCreateResponse
 import ru.nnsh.woof_connect.api.v1.models.DogProfileDeleteResponse
 import ru.nnsh.woof_connect.api.v1.models.DogProfileReadResponse
+import ru.nnsh.woof_connect.api.v1.models.DogProfileRequestDebugMode
 import ru.nnsh.woof_connect.api.v1.models.DogProfileUpdateResponse
 import ru.nnsh.woof_connect.api.v1.models.UserDogIdsResponse
+import ru.nnsh.woof_connect.common.WfcCorConfiguration
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase
+import ru.nnsh.woof_connect.common.dog_profile.WfcOwnerId
+import ru.nnsh.woof_connect.common.repository.IDogProfileRepository
 import ru.nnsh.woof_connect.common.stubs.stubDog
 import ru.nnsh.woof_connect.fixtures.DogProfileTestFixtures
-import kotlin.test.assertContentEquals
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-import org.junit.jupiter.api.TestInstance
-import ru.nnsh.woof_connect.api.v1.models.DogProfileRequestDebugMode
+import ru.nnsh.woof_connect.logger.loggerFactory
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DogProfileApiV1StubTest {
+abstract class DogProfileApiV1TestBase(
+    private val getTestRepository: () -> IDogProfileRepository.Initializable
+) {
 
-    private val fixtures = DogProfileTestFixtures(DogProfileRequestDebugMode.STUB)
+    private val fixtures = DogProfileTestFixtures(DogProfileRequestDebugMode.TEST)
+
+    private fun getWfcCorConfiguration(
+        initialDogs: List<WfcDogProfileBase>
+    ) = WfcCorConfiguration(
+        loggerFactory,
+        testRepository = getTestRepository().apply { init(initialDogs) }
+    )
 
     @Test
     fun testReadDogProfile() = test(
         methodName = "read",
-        body = fixtures.readRequest
+        body = fixtures.readRequest,
+        initialDogs = listOf(stubDog)
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileReadResponse>()
         assertEquals(HttpStatusCode.OK, httpResponse.status)
@@ -48,31 +61,37 @@ class DogProfileApiV1StubTest {
     @Test
     fun testCreateDogProfile() = test(
         methodName = "create",
-        body = fixtures.createRequest
+        body = fixtures.createRequest,
+        initialDogs = listOf(stubDog)
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileCreateResponse>()
         assertEquals(HttpStatusCode.OK, httpResponse.status)
         assertTrue(response.isSuccess)
-        assertEquals(stubDog.dogId.id, response.dogId?.dogId)
+        assertEquals(2, response.dogId?.dogId)
+
     }
 
     @Test
     fun testUpdateDogProfile() = test(
         methodName = "update",
-        body = fixtures.updateRequest
+        body = fixtures.updateRequest,
+        initialDogs = listOf(stubDog)
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileUpdateResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
         assertTrue(response.isSuccess)
         assertEquals(1, response.dogProfile?.dogId?.dogId)
         assertEquals("Rex", response.dogProfile?.name)
-        assertEquals(4, response.dogProfile?.age)
+        assertEquals("Mongrel", response.dogProfile?.breed)
+        assertEquals(fixtures.updateRequest.dogProfile.age, response.dogProfile?.age)
+        assertEquals(stubDog.description, response.dogProfile?.description)
     }
 
     @Test
     fun testDeleteDogProfile() = test(
         methodName = "delete",
-        body = fixtures.deleteRequest
+        body = fixtures.deleteRequest,
+        initialDogs = listOf(stubDog)
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileDeleteResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
@@ -82,33 +101,23 @@ class DogProfileApiV1StubTest {
     @Test
     fun testListDogs() = test(
         methodName = "list",
-        body = fixtures.listDogsRequest
+        body = fixtures.listDogsRequest,
+        initialDogs = List(10) { stubDog.copy(ownerId = WfcOwnerId.TheOne) }
     ) { httpResponse ->
         val response = httpResponse.body<UserDogIdsResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
         assertTrue(response.isSuccess)
-        assertContentEquals(List(10) { DogId(it.inc().toLong()) }, response.dogIds)
-    }
-
-    @Test
-    fun testDogProfileFail() = test(
-        methodName = "list",
-        body = fixtures.listDogsRequest
-            .copy(debug = fixtures.notFoundStubDebug)
-    ) { httpResponse ->
-        val response = httpResponse.body<UserDogIdsResponse>()
-        assertEquals(HttpStatusCode.OK, httpResponse.status)
-        assertFalse(response.isSuccess)
-        assertNotNull(response.error)
+        assertContentEquals(response.dogIds, List(10) { DogId(it.toLong().inc()) })
     }
 
 
     private fun test(
         methodName: String,
         body: BaseRequest,
+        initialDogs: List<WfcDogProfileBase>,
         assert: suspend (HttpResponse) -> Unit
     ) = testApplication {
-        application { module() }
+        application { module(getWfcCorConfiguration(initialDogs)) }
         val client = createClient {
             install(plugin = ContentNegotiation) {
                 jackson {

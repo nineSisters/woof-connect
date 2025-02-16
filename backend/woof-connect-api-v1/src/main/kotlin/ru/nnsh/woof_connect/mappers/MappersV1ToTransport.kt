@@ -54,7 +54,7 @@ private fun WfcContext.toTransportInitWs() = SessionInit(
 private fun WfcContext.toTransportUpdate() = DogProfileUpdateResponse(
     isSuccess = state == WfcState.FINISHING,
     error = error.toTransport(),
-    dogId = dogProfileResponse.dogId.takeIf { it != WfcDogId.None }?.toTransport()
+    dogProfile = dogProfileResponse.toTransportDogProfile()
 )
 
 

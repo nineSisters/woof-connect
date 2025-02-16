@@ -1,12 +1,14 @@
 package ru.nnsh.woof_connect.repository
 
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.TestInstance
 import ru.nnsh.woof_connect.repository.tests.DogCreateRepositoryTest
 import ru.nnsh.woof_connect.repository.tests.DogDeleteRepositoryTest
 import ru.nnsh.woof_connect.repository.tests.DogListRepositoryTest
 import ru.nnsh.woof_connect.repository.tests.DogReadRepositoryTest
 import ru.nnsh.woof_connect.repository.tests.DogUpdateRepositoryTest
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DogProfileInMemoryRepositoryTests {
 
     private val repository get() = DogProfileInMemoryRepository()

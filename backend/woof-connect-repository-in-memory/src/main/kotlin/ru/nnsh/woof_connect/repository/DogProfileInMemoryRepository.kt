@@ -29,8 +29,9 @@ class DogProfileInMemoryRepository(
 
     override fun init(list: List<WfcDogProfileBase>) {
         for (dog in list) {
-            val entity = DogProfileEntity(dog)
-            cache.put(currentKey.getAndIncrement(), entity)
+            val key = currentKey.getAndIncrement()
+            val entity = DogProfileEntity(dog.copy(dogId = WfcDogId(key)))
+            cache.put(key, entity)
         }
     }
 
@@ -52,7 +53,7 @@ class DogProfileInMemoryRepository(
     }
 
     override suspend fun updateDog(request: DbDogProfileRequest): IDbResponse<WfcDogProfileBase> = tryDogMethod {
-        val key = request.dog.dogId
+        val key = request.dog.dogId.also { println(it.id) }
             .takeIf { it != WfcDogId.None }
             ?: return@tryDogMethod Err(WfcError.EMPTY_DOG_ID)
         mutex.withLock {

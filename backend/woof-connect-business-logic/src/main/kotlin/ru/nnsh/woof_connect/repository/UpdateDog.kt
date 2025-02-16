@@ -14,8 +14,8 @@ fun WfcChain.prepareUpdateDog() = worker {
     title = "Подготовка собаки к обновлению в БД: мёрджим данные из запроса из БД"
     onRunning()
     doWork {
+        assert(dogProfileRequest.dogId == dogProfileRead.dogId)
         dogProfilePrepare = dogProfileRequest
-            .copy(dogId = WfcDogId.None)
             .mergeWith(dogProfileRead)
     }
 }

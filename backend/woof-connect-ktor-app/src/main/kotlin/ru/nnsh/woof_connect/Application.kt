@@ -34,11 +34,12 @@ fun main() {
     }.start(wait = true)
 }
 
-internal fun Application.module() {
-    val wfcCorConfiguration = WfcCorConfiguration(
+internal fun Application.module(
+    wfcCorConfiguration: WfcCorConfiguration = WfcCorConfiguration(
         loggerFactory,
         WfcWsSessionsRepositoryImpl()
     )
+) {
     serializationModule()
     monitoringModule()
     webSocketModule(wfcCorConfiguration)
