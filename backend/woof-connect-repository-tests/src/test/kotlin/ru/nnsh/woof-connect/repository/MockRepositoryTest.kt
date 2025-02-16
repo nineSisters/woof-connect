@@ -1,4 +1,4 @@
-package repository
+package ru.nnsh.`woof-connect`.repository
 
 import kotlinx.coroutines.test.runTest
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogId

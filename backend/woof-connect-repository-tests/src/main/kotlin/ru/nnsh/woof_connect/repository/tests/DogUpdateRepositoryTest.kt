@@ -24,6 +24,7 @@ abstract class DogUpdateRepositoryTest(
     @Test
     fun updateSuccess() = runRepoTest {
         val updatingDog = stubDog.copy(
+            dogId = WfcDogId(1),
             description = "Old wise dog",
             age = stubDog.age + 1
         )

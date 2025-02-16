@@ -19,5 +19,11 @@ data class WfcError(
             group = "database",
             message = "Dog not found"
         )
+        val EMPTY_DOG_ID = WfcError(
+            code = WfcError.CODE_VALIDATION,
+            field = "dogId",
+            group = "noContent",
+            message = "Dog id must be present"
+        )
     }
 }

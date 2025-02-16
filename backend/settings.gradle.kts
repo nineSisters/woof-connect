@@ -26,6 +26,7 @@ include(
     ":woof-connect-ktor-app",
     ":woof-connect-logger",
     ":woof-connect-business-logic",
+    ":woof-connect-repository-in-memory",
 
     ":woof-connect-repository-tests"
 )

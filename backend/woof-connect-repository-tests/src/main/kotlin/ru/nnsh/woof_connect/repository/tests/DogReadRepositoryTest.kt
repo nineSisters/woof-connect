@@ -23,7 +23,7 @@ abstract class DogReadRepositoryTest(
 
     @Test
     fun readSuccess() = runRepoTest {
-        val result = repository.readDog(DbDogIdRequest(stubDog.dogId))
+        val result = repository.readDog(DbDogIdRequest(WfcDogId(1)))
         assertIs<IDbResponse.DogProfile>(result)
         assertEquals(stubDog, result.data)
     }

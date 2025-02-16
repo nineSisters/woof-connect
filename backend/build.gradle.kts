@@ -4,4 +4,3 @@ plugins {
 
 group = "ru.nnsh.woof-connect"
 version = "0.1"
-

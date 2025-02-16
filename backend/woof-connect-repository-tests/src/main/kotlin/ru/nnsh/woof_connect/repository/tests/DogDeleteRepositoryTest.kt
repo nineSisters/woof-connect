@@ -10,6 +10,7 @@ import ru.nnsh.woof_connect.common.stubs.stubDog
 import ru.nnsh.woof_connect.repository.runRepoTest
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
 
 abstract class DogDeleteRepositoryTest(
     private val repository: IDogProfileRepository.Initializable,
@@ -22,7 +23,7 @@ abstract class DogDeleteRepositoryTest(
 
     @Test
     fun deleteSuccess() = runRepoTest {
-        val result = repository.deleteDog(DbDogIdRequest(stubDog.dogId))
+        val result = repository.deleteDog(DbDogIdRequest(WfcDogId(1)))
         assertIs<IDbResponse.DogProfile>(result)
         assertEquals(stubDog, result.data)
     }
