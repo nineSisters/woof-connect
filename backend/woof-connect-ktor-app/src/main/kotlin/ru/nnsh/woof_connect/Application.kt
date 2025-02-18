@@ -19,6 +19,8 @@ import ru.nnsh.woof_connect.ws.WfcWsSessionsRepositoryImpl
 import ru.nnsh.woof_connect.ws.processWsSession
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
+import ru.nnsh.woof_connect.repository.DogProfileInMemoryRepository
+import ru.nnsh.woof_connect.repository.DogProfilePgRepository
 
 fun main() {
     embeddedServer(
@@ -37,7 +39,9 @@ fun main() {
 internal fun Application.module(
     wfcCorConfiguration: WfcCorConfiguration = WfcCorConfiguration(
         loggerFactory,
-        WfcWsSessionsRepositoryImpl()
+        WfcWsSessionsRepositoryImpl(),
+        testRepository = DogProfileInMemoryRepository(),
+        prodRepository = DogProfilePgRepository()
     )
 ) {
     serializationModule()

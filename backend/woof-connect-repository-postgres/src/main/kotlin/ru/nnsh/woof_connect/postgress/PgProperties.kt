@@ -1,7 +1,7 @@
 package ru.nnsh.woof_connect.postgress
 
 data class PgProperties(
-    val host: String = "localhost",
+    val host: String = "postgresql",
     val port: Int = 5432,
     val user: String = "woof_user",
     val password: String = "woof_pass",

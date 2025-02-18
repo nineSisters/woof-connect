@@ -36,3 +36,23 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+jib {
+    from {
+        image = "eclipse-temurin:21-jre" // ARM64-compatible base image
+        platforms {
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
+        }
+    }
+    containerizingMode = "packaged" // Builds a platform-specific image
+}
+
+ktor {
+    docker {
+        localImageName = "woof-app"
+
+    }
+}

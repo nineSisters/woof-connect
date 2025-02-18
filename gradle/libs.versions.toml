@@ -5,6 +5,7 @@ ktor-version = "3.0.3"
 logback = "1.5.13"
 coroutines = "1.10.1"
 exposed = "0.59.0"
+fluentdLogger = "0.3.4"
 
 [libraries]
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -26,8 +27,12 @@ ktor-server-auth = { module = "io.ktor:ktor-server-auth-jvm", version.ref = "kto
 ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt-jvm", version.ref = "ktor-version" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio-jvm", version.ref = "ktor-version" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
+
 logging-logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 logging-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.16" }
+logging-fluentd-appender = { module = "com.sndyuk:logback-more-appenders", version = "1.8.7" }
+logging-fluentd-logger = { group = "org.fluentd", name = "fluent-logger", version.ref = "fluentdLogger" }
+
 persistence-cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version = "0.14.0" }
 #logback-core = { group = "ch.qos.logback", name = "logback-core", version.ref = "logback" }
 # database

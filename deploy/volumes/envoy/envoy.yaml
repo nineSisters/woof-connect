@@ -26,9 +26,7 @@ static_resources:
                     routes:
                       - match: { path: "/" }
                         route: { cluster: app }
-                      - match: { prefix: "/v1/ad/" }
-                        route: { cluster: app }
-                      - match: { prefix: "/v2/ad/" }
+                      - match: { prefix: "/dog-profile/" }
                         route: { cluster: app }
                       - match: { prefix: "/realms/" }
                         route: { cluster: keycloak }

@@ -45,18 +45,22 @@ class DogProfilePgRepository(
 
     private val source = HikariDataSource(hikariConfig)
 
-    private val connection = Database.connect(
-        datasource = HikariDataSource(hikariConfig)
-    )
+    private val connection by lazy {
+        Database.connect(
+            datasource = HikariDataSource(hikariConfig)
+        ).also {
+            transaction(it) {
+                if (!dogTable.exists()) {
+                    SchemaUtils.create(dogTable)
+                }
+            }
+        }
+    }
 
     private val dogTable = DogProfileTable(schema = pgProperties.schema)
 
     init {
-        transaction(connection) {
-            if (!dogTable.exists()) {
-                SchemaUtils.create(dogTable)
-            }
-        }
+
     }
 
     override fun init(list: List<WfcDogProfileBase>): Unit = transaction(connection) {
