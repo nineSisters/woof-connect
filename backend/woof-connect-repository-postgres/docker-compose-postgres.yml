@@ -1,0 +1,23 @@
+services:
+  psql:
+    image: postgres:17-alpine
+    container_name: postgresql
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    user: postgres
+    environment:
+      POSTGRES_PASSWORD: woof_pass
+      POSTGRES_USER: woof_user
+      POSTGRES_DB: woof_dogs_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d woof_dogs_db -U woof_user" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

@@ -27,6 +27,7 @@ include(
     ":woof-connect-logger",
     ":woof-connect-business-logic",
     ":woof-connect-repository-in-memory",
+    ":woof-connect-repository-postgres",
 
     ":woof-connect-repository-tests"
 )

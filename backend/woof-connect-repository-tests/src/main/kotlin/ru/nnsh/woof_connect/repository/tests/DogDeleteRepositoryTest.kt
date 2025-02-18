@@ -25,7 +25,7 @@ abstract class DogDeleteRepositoryTest(
     fun deleteSuccess() = runRepoTest {
         val result = repository.deleteDog(DbDogIdRequest(WfcDogId(1)))
         assertIs<IDbResponse.DogProfile>(result)
-        assertEquals(stubDog, result.data)
+        assertEquals(stubDog.copy(dogId = WfcDogId(1)), result.data)
     }
 
     @Test

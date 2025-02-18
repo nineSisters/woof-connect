@@ -35,7 +35,7 @@ import ru.nnsh.woof_connect.logger.loggerFactory
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class DogProfileApiV1TestBase(
-    private val getTestRepository: () -> IDogProfileRepository.Initializable
+    protected val getTestRepository: () -> IDogProfileRepository.Initializable
 ) {
 
     private val fixtures = DogProfileTestFixtures(DogProfileRequestDebugMode.TEST)
