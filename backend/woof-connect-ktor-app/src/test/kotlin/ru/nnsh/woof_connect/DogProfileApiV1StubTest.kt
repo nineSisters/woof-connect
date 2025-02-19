@@ -27,13 +27,18 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import org.junit.jupiter.api.TestInstance
+import ru.nnsh.woof_connect.api.v1.models.DogProfileRequestDebugMode
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DogProfileApiV1StubTest {
+
+    private val fixtures = DogProfileTestFixtures(DogProfileRequestDebugMode.STUB)
 
     @Test
     fun testReadDogProfile() = test(
         methodName = "read",
-        body = DogProfileTestFixtures.readRequest
+        body = fixtures.readRequest
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileReadResponse>()
         assertEquals(HttpStatusCode.OK, httpResponse.status)
@@ -43,7 +48,7 @@ class DogProfileApiV1StubTest {
     @Test
     fun testCreateDogProfile() = test(
         methodName = "create",
-        body = DogProfileTestFixtures.createRequest
+        body = fixtures.createRequest
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileCreateResponse>()
         assertEquals(HttpStatusCode.OK, httpResponse.status)
@@ -54,18 +59,20 @@ class DogProfileApiV1StubTest {
     @Test
     fun testUpdateDogProfile() = test(
         methodName = "update",
-        body = DogProfileTestFixtures.updateRequest
+        body = fixtures.updateRequest
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileUpdateResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
         assertTrue(response.isSuccess)
-        assertEquals(response.dogId?.dogId, stubDog.dogId.id)
+        assertEquals(1, response.dogProfile?.dogId?.dogId)
+        assertEquals("Rex", response.dogProfile?.name)
+        assertEquals(4, response.dogProfile?.age)
     }
 
     @Test
     fun testDeleteDogProfile() = test(
         methodName = "delete",
-        body = DogProfileTestFixtures.deleteRequest
+        body = fixtures.deleteRequest
     ) { httpResponse ->
         val response = httpResponse.body<DogProfileDeleteResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
@@ -75,19 +82,19 @@ class DogProfileApiV1StubTest {
     @Test
     fun testListDogs() = test(
         methodName = "list",
-        body = DogProfileTestFixtures.listDogsRequest
+        body = fixtures.listDogsRequest
     ) { httpResponse ->
         val response = httpResponse.body<UserDogIdsResponse>()
         assertEquals(httpResponse.status, HttpStatusCode.OK)
         assertTrue(response.isSuccess)
-        assertContentEquals(response.dogIds, LongArray(10) { it.toLong() }.map { DogId(it) })
+        assertContentEquals(List(10) { DogId(it.inc().toLong()) }, response.dogIds)
     }
 
     @Test
     fun testDogProfileFail() = test(
         methodName = "list",
-        body = DogProfileTestFixtures.listDogsRequest
-            .copy(debug = DogProfileTestFixtures.notFoundStubDebug)
+        body = fixtures.listDogsRequest
+            .copy(debug = fixtures.notFoundStubDebug)
     ) { httpResponse ->
         val response = httpResponse.body<UserDogIdsResponse>()
         assertEquals(HttpStatusCode.OK, httpResponse.status)

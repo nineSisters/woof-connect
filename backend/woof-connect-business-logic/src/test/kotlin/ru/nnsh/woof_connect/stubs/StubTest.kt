@@ -2,12 +2,8 @@ package ru.nnsh.woof_connect.stubs
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import ru.nnsh.woof_connect.WfcCorConfiguration
 import ru.nnsh.woof_connect.WfcProcessor
-import ru.nnsh.woof_connect.common.WfcContext
-import ru.nnsh.woof_connect.common.WfcError
-import ru.nnsh.woof_connect.common.WfcState
-import ru.nnsh.woof_connect.common.WfcWorkMode
+import ru.nnsh.woof_connect.common.*
 import ru.nnsh.woof_connect.common.dog_profile.*
 import ru.nnsh.woof_connect.common.stubs.stubDog
 import ru.nnsh.woof_connect.logger.loggerFactory
@@ -16,10 +12,14 @@ import kotlin.test.assertEquals
 
 class StubTest {
 
-    private val processor: WfcProcessor = WfcProcessor(WfcCorConfiguration(loggerFactory))
-    val userId = WfcOwnerId(11)
-    val dogId = WfcDogId(12)
-    val dogName = "Sirok"
+    private val processor: WfcProcessor = WfcProcessor(
+        WfcCorConfiguration(
+            loggerFactory
+        )
+    )
+    private val userId = WfcOwnerId(11)
+    private val dogId = WfcDogId(12)
+    private val dogName = "Sirok"
 
     @Test
     fun create() = runTest {
@@ -119,7 +119,7 @@ class StubTest {
 
         ctx.state = WfcState.RUNNING
         processor.invoke(ctx)
-        val expectedIds = List(10) { WfcDogId(it.toLong()) }
+        val expectedIds = List(10) { WfcDogId(it) }
         assertContentEquals(expectedIds, ctx.allDogsResponse)
         assertEquals(WfcState.FINISHING, ctx.state)
     }

@@ -4,6 +4,7 @@ import org.slf4j.Logger
 import ru.nanashi.ru.nnsh.cor.impl.worker
 import ru.nnsh.woof_connect.WfcChain
 import ru.nnsh.woof_connect.common.WfcState
+import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileBase.Companion.mergeWith
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogProfileStub
 import ru.nnsh.woof_connect.logger.doWithLogging
 
@@ -16,7 +17,7 @@ internal fun WfcChain.stubUpdateSuccess(
     doWork {
         logger.doWithLogging(requestId.toString()) {
             state = WfcState.FINISHING
-            dogProfileResponse = dogProfileRequest.copy()
+            dogProfileResponse = dogProfileRequest.mergeWith(dogProfileResponse)
         }
     }
 }

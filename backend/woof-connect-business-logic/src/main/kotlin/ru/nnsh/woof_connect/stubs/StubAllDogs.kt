@@ -17,7 +17,7 @@ internal fun WfcChain.stubListAllDogsIdsSuccess(
     doWork {
         logger.doWithLogging(requestId.toString()) {
             state = WfcState.FINISHING
-            allDogsResponse = List(10) { WfcDogId(it.toLong()) }
+            allDogsResponse = List(10) { WfcDogId(it.inc()) }
         }
     }
 }

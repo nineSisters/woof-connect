@@ -14,3 +14,9 @@ fun WfcContext.fail(
     state = WfcState.FAILING
     error = WfcError(code, field, group, message, cause)
 }
+fun WfcContext.fail(
+    error: WfcError,
+) {
+    state = WfcState.FAILING
+    this.error = error
+}

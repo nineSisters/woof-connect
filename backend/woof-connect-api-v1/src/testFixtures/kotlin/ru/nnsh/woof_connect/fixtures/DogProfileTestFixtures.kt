@@ -2,14 +2,18 @@ package ru.nnsh.woof_connect.fixtures
 
 import ru.nnsh.woof_connect.api.v1.models.*
 
-object DogProfileTestFixtures {
+class DogProfileTestFixtures(
+    debugMode: DogProfileRequestDebugMode
+) {
 
-    private val successStubDebug = DogProfileDebug(DogProfileRequestDebugMode.STUB, DogProfileRequestDebugStubs.SUCCESS)
-    val notFoundStubDebug = DogProfileDebug(DogProfileRequestDebugMode.STUB, DogProfileRequestDebugStubs.NOT_FOUND)
+    private val successStubDebug = DogProfileDebug(debugMode, DogProfileRequestDebugStubs.SUCCESS)
+    val notFoundStubDebug = DogProfileDebug(debugMode, DogProfileRequestDebugStubs.NOT_FOUND)
+
     val readRequest = DogProfileReadRequest(
         dogId = DogId(1),
         debug = successStubDebug
     )
+
     val createRequest = DogProfileCreateRequest(
         dogProfile = DogProfileBase(
             ownerId = UserId(1),
@@ -20,9 +24,10 @@ object DogProfileTestFixtures {
         ),
         debug = successStubDebug
     )
+
     val updateRequest = DogProfileUpdateRequest(
         dogProfile = DogProfileBase(
-            dogId = DogId(11),
+            dogId = DogId(1),
             ownerId = UserId(11),
             name = "Rex",
             age = 4

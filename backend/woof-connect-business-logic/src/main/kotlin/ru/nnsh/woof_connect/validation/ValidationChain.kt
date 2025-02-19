@@ -4,8 +4,9 @@ import ru.nanashi.ru.nnsh.cor.dsl.ICorChainDsl
 import ru.nanashi.ru.nnsh.cor.impl.chain
 import ru.nanashi.ru.nnsh.cor.impl.worker
 import ru.nnsh.woof_connect.WfcChain
-import ru.nnsh.woof_connect.WfcCorConfiguration
+import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.common.WfcContext
+import ru.nnsh.woof_connect.common.WfcError
 import ru.nnsh.woof_connect.common.WfcError.Companion.CODE_VALIDATION
 import ru.nnsh.woof_connect.common.WfcState
 import ru.nnsh.woof_connect.common.dog_profile.WfcDogId
@@ -73,7 +74,7 @@ internal fun WfcChain.validateHasDogId() = worker {
         state == WfcState.RUNNING && dogProfileRequest.dogId == WfcDogId.None
     }
     doWork {
-        fail(CODE_VALIDATION, "dogid", "noContent", "Dog ID must be present")
+        fail(WfcError.EMPTY_DOG_ID)
     }
 }
 

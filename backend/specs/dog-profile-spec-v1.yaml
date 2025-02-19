@@ -291,8 +291,8 @@ components:
         - $ref: '#/components/schemas/BaseResponse'
         - type: object
           properties:
-            dogId:
-              $ref: '#/components/schemas/DogId'
+            dogProfile:
+              $ref: '#/components/schemas/DogProfileBase'
 
     DogProfileDeleteRequest:
       type: object

@@ -1,6 +1,6 @@
 package ru.nnsh.woof_connect.common
 
-class WfcError(
+data class WfcError(
     val code: Int,
     val field: String? = null,
     val group: String? = null,
@@ -12,5 +12,18 @@ class WfcError(
         const val CODE_VALIDATION = -2
         const val CODE_DB = -3
         const val CODE_SYSTEM = -4
+
+        val DOG_NOT_FOUND = WfcError(
+            code = WfcError.CODE_DB,
+            field = "dogId",
+            group = "database",
+            message = "Dog not found"
+        )
+        val EMPTY_DOG_ID = WfcError(
+            code = WfcError.CODE_VALIDATION,
+            field = "dogId",
+            group = "noContent",
+            message = "Dog id must be present"
+        )
     }
 }

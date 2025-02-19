@@ -10,6 +10,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
+import ru.nnsh.woof_connect.common.WfcCorConfiguration
 import ru.nnsh.woof_connect.common.ws.WfcWsSessionRepository
 import ru.nnsh.woof_connect.controller.routeDogProfile
 import ru.nnsh.woof_connect.logger.loggerFactory
@@ -33,20 +34,25 @@ fun main() {
     }.start(wait = true)
 }
 
-internal fun Application.module() {
-    routingModule()
+internal fun Application.module(
+    wfcCorConfiguration: WfcCorConfiguration = WfcCorConfiguration(
+        loggerFactory,
+        WfcWsSessionsRepositoryImpl()
+    )
+) {
     serializationModule()
     monitoringModule()
-    webSocketModule()
+    webSocketModule(wfcCorConfiguration)
+    routingModule(wfcCorConfiguration)
 }
 
-private fun Application.routingModule() {
+private fun Application.routingModule(wfcCorConfiguration: WfcCorConfiguration) {
     routing {
         get("/") {
             call.respondText("Hi")
         }
         routeDogProfile(
-            WfcProcessor(WfcCorConfiguration(loggerFactory))
+            WfcProcessor(wfcCorConfiguration)
         )
     }
 }
@@ -70,7 +76,7 @@ private fun Application.monitoringModule() {
 }
 
 private fun Application.webSocketModule(
-    sessionsRepository: WfcWsSessionRepository = WfcWsSessionsRepositoryImpl()
+    wfcCorConfiguration: WfcCorConfiguration
 ) {
     install(WebSockets) {
         contentConverter = JacksonWebsocketContentConverter(apiV1ObjectMapper)
@@ -79,8 +85,7 @@ private fun Application.webSocketModule(
     }
     routing {
         webSocket("/ws") {
-            processWsSession(sessionsRepository, WfcProcessor(WfcCorConfiguration(loggerFactory)))
+            processWsSession(wfcCorConfiguration)
         }
     }
 }
-

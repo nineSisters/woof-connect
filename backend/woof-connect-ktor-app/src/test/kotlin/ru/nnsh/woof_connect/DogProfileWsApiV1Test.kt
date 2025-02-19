@@ -26,19 +26,22 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
+import ru.nnsh.woof_connect.api.v1.models.DogProfileRequestDebugMode
 
 class DogProfileWsApiV1Test {
 
+    private val fixtures = DogProfileTestFixtures(DogProfileRequestDebugMode.STUB)
+
     @Test
     fun testReadDogProfile() = test<DogProfileReadResponse>(
-        DogProfileTestFixtures.readRequest
+        fixtures.readRequest
     ) { response ->
         assertEquals(response.dogProfile?.name, "Sharik")
     }
 
     @Test
     fun testCreateDogProfile() = test<DogProfileCreateResponse>(
-        DogProfileTestFixtures.createRequest
+        fixtures.createRequest
     ) { response ->
         assertTrue(response.isSuccess)
         assertEquals(response.dogId?.dogId, stubDog.dogId.id)
@@ -46,31 +49,33 @@ class DogProfileWsApiV1Test {
 
     @Test
     fun testUpdateDogProfile() = test<DogProfileUpdateResponse>(
-        DogProfileTestFixtures.updateRequest
+        fixtures.updateRequest
     ) { response ->
         assertTrue(response.isSuccess)
-        assertEquals(response.dogId?.dogId, stubDog.dogId.id)
+        assertEquals(1, response.dogProfile?.dogId?.dogId)
+        assertEquals("Rex", response.dogProfile?.name)
+        assertEquals(4, response.dogProfile?.age)
     }
 
     @Test
     fun testDeleteDogProfile() = test<DogProfileDeleteResponse>(
-        DogProfileTestFixtures.deleteRequest
+        fixtures.deleteRequest
     ) { response ->
         assertTrue(response.isSuccess)
     }
 
     @Test
     fun testListDogs() = test<UserDogIdsResponse>(
-        DogProfileTestFixtures.listDogsRequest
+        fixtures.listDogsRequest
     ) { response ->
         assertTrue(response.isSuccess)
-        assertContentEquals(response.dogIds, listOf(DogId(1), DogId(2)))
+        assertContentEquals(List(10) { DogId(it.inc().toLong()) }, response.dogIds)
     }
 
     @Test
     fun testDogProfileFail() = test<DogProfileReadResponse>(
-        DogProfileTestFixtures.readRequest
-            .copy(debug = DogProfileTestFixtures.notFoundStubDebug)
+        fixtures.readRequest
+            .copy(debug = fixtures.notFoundStubDebug)
     ) { response ->
         assertFalse(response.isSuccess)
         assertNotNull(response.error)

@@ -29,6 +29,8 @@ dependencies {
     implementation(projects.woofConnectApiV1)
     implementation(projects.woofConnectLogger)
     implementation(projects.woofConnectBusinessLogic)
+    implementation(projects.woofConnectRepositoryInMemory)
+    implementation(projects.woofConnectRepositoryPostgres)
 }
 
 tasks.test {
